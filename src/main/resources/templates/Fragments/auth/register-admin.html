@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:if = "${param.success}">
+    Registration successfully
+</div>
+<form method="POST" th:action="@{/register/admin}" th:object="${taiKhoan}">
+    <div>
+        <label>Username</label>
+        <input
+                type="text"
+                class="form-control"
+                placeholder="tenTaikhoan"
+                th:field="*{tenTaikhoan}">
+    </div>
+    <div>
+        <label>Gmail</label>
+        <input
+                type="text"
+                class="form-control"
+                placeholder="Email"
+                th:field="*{email}">
+    </div>
+    <div>
+        <label>Password</label>
+        <input
+                type="password"
+                class="form-control"
+                placeholder="matKhau"
+                th:field="*{matKhau}">
+    </div>
+    <button type="submit">Register</button>
+</form>
+</body>
+</html>

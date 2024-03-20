@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:if = "${param.success}">
+    Registration successfully
+</div>
+<div th:if = "${success !=null}">
+    <a th:href="@{/login}" class="btn btn-secondary">Login now</a>
+</div>
+    <p> [[${message}]]</p>
+</body>
+</html>

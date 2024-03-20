@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:if = "${param.success}">
+    Kiểm tra E-mail để xác nhận đăng kí
+</div>
+<form method="POST" th:action="@{/register}" th:object="${taiKhoan}">
+    <div >
+        <label>Tên tài khoản: </label>
+        <input
+                type="text"
+                class="form-control"
+                placeholder="Tên tài Khoản..."
+                th:field="*{tenTaikhoan}">
+    </div>
+    <div>
+        <label>Mật khẩu: </label>
+        <input
+                type="password"
+                class="form-control"
+                placeholder="Mật khẩu..."
+                th:field="*{matKhau}">
+    </div>
+    <div>
+        <label>Gmail</label>
+        <input
+                type="text"
+                class="form-control"
+                placeholder="Email"
+                th:field="*{email}">
+    </div>
+
+    <button type="submit">Register</button>
+</form>
+</body>
+</html>
