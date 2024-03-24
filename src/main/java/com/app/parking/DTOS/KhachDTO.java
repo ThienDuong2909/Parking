@@ -2,13 +2,13 @@ package com.app.parking.DTOS;
 
 
 public class KhachDTO {
-	private int MaKhachHang, maTaiKhoan;
-    private String HoTen, GioiTinh, STD, diaChi;
+	private int MaKhachHang, GioiTinh, maTaiKhoan;
+    private String HoTen,  STD, diaChi;
     
 	public KhachDTO() {	
 	}
 
-	public KhachDTO(int maKhachHang, int maTaiKhoan, String hoTen, String gioiTinh, String sTD, String diaChi) {
+	public KhachDTO(int maKhachHang, int maTaiKhoan, String hoTen, int gioiTinh, String sTD, String diaChi) {
 		
 		this.MaKhachHang = maKhachHang;
 		this.maTaiKhoan = maTaiKhoan;
@@ -42,11 +42,13 @@ public class KhachDTO {
 		HoTen = hoTen;
 	}
 
-	public String getGioiTinh() {
+	
+
+	public int getGioiTinh() {
 		return GioiTinh;
 	}
 
-	public void setGioiTinh(String gioiTinh) {
+	public void setGioiTinh(int gioiTinh) {
 		GioiTinh = gioiTinh;
 	}
 

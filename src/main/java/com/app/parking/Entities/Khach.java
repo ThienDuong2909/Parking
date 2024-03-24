@@ -1,16 +1,9 @@
 package com.app.parking.Entities;
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+
 import java.util.Collection;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "Khach")
 public class Khach {
@@ -18,16 +11,75 @@ public class Khach {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="MaKhachHang")
     private int maKhachHang;
-    @Column(name ="HoTen", columnDefinition= "nvarchar(30)")
+
+    @Column(name ="HoTen", columnDefinition= "nvarchar(50)")
     private String hoTen;
-    @Column(name ="GioiTinh", columnDefinition= "nvarchar(30)")
-    private String gioiTinh;
-    @Column(name ="STD", columnDefinition= "nvarchar(30)")
+
+    @Column(name ="GioiTinh")
+    private int gioiTinh;
+
+    @Column(name ="STD", columnDefinition= "nvarchar(10)")
     private String STD;
+
     @Column(name ="DiaChi", columnDefinition= "nvarchar(50)")
     private String diaChi;
 
-    @Column(name ="MaTaiKhoan")
-    private int maTaiKhoan;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MaTaiKhoan")
+    private TaiKhoan taiKhoan;
+    public Khach() { }
+
+    public Khach(String hoTen, int gioiTinh, String STD, String diaChi, TaiKhoan taiKhoan) {
+        this.hoTen = hoTen;
+        this.gioiTinh = gioiTinh;
+        this.STD = STD;
+        this.diaChi = diaChi;
+        this.taiKhoan = taiKhoan;
+    }
+
+    public int getMaKhachHang() {
+        return maKhachHang;
+    }
+
+    public String getHoTen() {
+        return hoTen;
+    }
+
+    public int getGioiTinh() {
+        return gioiTinh;
+    }
+
+    public String getSTD() {
+        return STD;
+    }
+
+    public String getDiaChi() {
+        return diaChi;
+    }
+
+    public TaiKhoan getTaiKhoan() {
+        return taiKhoan;
+    }
+
+    public void setHoTen(String hoTen) {
+        this.hoTen = hoTen;
+    }
+
+    public void setGioiTinh(int gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
+    public void setSTD(String STD) {
+        this.STD = STD;
+    }
+
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+
+    public void setTaiKhoan(TaiKhoan taiKhoan) {
+        this.taiKhoan = taiKhoan;
+    }
 
 }

@@ -5,7 +5,6 @@ import com.app.parking.Entities.ChucVu;
 import com.app.parking.Entities.PhuongThucDangNhap;
 import com.app.parking.Entities.TaiKhoan;
 import com.app.parking.Exception.UserNotFoundException;
-import com.app.parking.Repositories.ChucVuRepository;
 import com.app.parking.Repositories.TaiKhoanRepository;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,7 @@ public class TaiKhoanService {
 
         return taiKhoanRepo.save(taikhoan);
     }
-    public TaiKhoan findByEmail(String email) {
+    public TaiKhoan timTheoEmail(String email) {
         TaiKhoan userEntity = taiKhoanRepo.findUserByEmail(email);
         if(userEntity !=null){
             return userEntity;
@@ -45,13 +44,15 @@ public class TaiKhoanService {
         return null;
     }
 
-    public void taoTaiKhoanNhanVien(DangKiTaiKhoanDTO dangKiTaiKhoanDTO) {
+    public TaiKhoan taoTaiKhoanNhanVien(DangKiTaiKhoanDTO dangKiTaiKhoanDTO) {
         ChucVu chucVu = chucVuService.timChucVu("ROLE_NHANVIEN").orElseThrow(()-> new RuntimeException("Role Is Not Found"));
         System.out.println(chucVu);
         Collection<ChucVu> chucVus = new ArrayList<>();
         chucVus.add(chucVu);
-        TaiKhoan taikhoan = new TaiKhoan(dangKiTaiKhoanDTO.getTenTaikhoan(), passwordEncoder.encode(dangKiTaiKhoanDTO.getMatKhau()), dangKiTaiKhoanDTO.getEmail(), chucVus, null, 0,null, PhuongThucDangNhap.LOCAL);
+        String maXacMinh = RandomString.make(50);
+        TaiKhoan taikhoan = new TaiKhoan(dangKiTaiKhoanDTO.getTenTaikhoan(), passwordEncoder.encode(dangKiTaiKhoanDTO.getMatKhau()), dangKiTaiKhoanDTO.getEmail(), chucVus, maXacMinh, 0,null, PhuongThucDangNhap.LOCAL);
         taiKhoanRepo.save(taikhoan);
+        return taikhoan;
     }
 
     public void capNhatMaLamMoiMatKhau(String token, String email) throws UserNotFoundException {
