@@ -91,11 +91,12 @@ public class AuthController {
         return "/Fragments/auth/register-admin";
     }
     @PostMapping("/register/admin")
-    public String registerForAdmin(@ModelAttribute("user") DangKiTaiKhoanDTO user
-            ,BindingResult result, Model model
-    ){
-        System.out.println("User"+user);
-        taiKhoanService.taoTaiKhoanNhanVien(user);
+    public String registerForAdmin(@ModelAttribute("user") DangKiTaiKhoanDTO dangKiTaiKhoanDTO
+            ,BindingResult result, Model model,HttpServletRequest req
+    ) throws MessagingException, UnsupportedEncodingException {
+        String siteURL = getSiteURL(req);
+        TaiKhoan taiKhoan = taiKhoanService.taoTaiKhoanNhanVien(dangKiTaiKhoanDTO);
+        sendVerificationEmail(taiKhoan, siteURL);
         return "redirect:/register/admin?success";
     }
 
