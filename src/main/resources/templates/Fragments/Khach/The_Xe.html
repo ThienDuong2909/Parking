@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thẻ Xe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        header {
+            background-color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        section {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .card {
+            width: calc(30% - 20px);
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #ccc;
+            border-radius: 10px;
+            box-sizing: border-box;
+            text-align: left;
+            position: relative;
+        }
+        .card h2 {
+            margin-top: 0;
+        }
+        .edit-btn {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 20px; /* Thêm dòng này để tạo khoảng cách */
+        }
+        .card-content {
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+    
+        <h1>Thẻ Xe</h1>
+        <button  onclick="location.href='/user/DK_the_xe'">Đăng ký thẻ xe</button>
+    
+    
+    
+    <section class="container">     
+        <div class="card" th:each="the_chua_duyet : ${ds_the_chua_duyet}">
+            <div class="card-content">
+                <h2>Thông tin thẻ xe</h2>
+                <p>Chủ sở hữu xe: <span th:text="${the_chua_duyet.ten}"></span></p>
+                <p>Loại xe: <span th:text="${the_chua_duyet.LoaiXe}"></span></p>
+                <p>Biển số xe: <span th:text="${the_chua_duyet.BienSo}"></span></p>
+                <p>Thời hạn: <span th:text="${the_chua_duyet.ThoiHan}"></span></p>
+                <p><strong>Trạng thái: Đang chờ xét duyệt của nhân viên</strong></p>
+            </div>
+            <button class="edit-btn" onclick="location.href='edit.html'">Chỉnh sửa</button>
+        </div>
+        <!--
+        <div class="card" th:each="product : ${products}">
+            <div class="card-content">
+                <h2>Thông tin thẻ xe</h2>
+                <p><p>Mã thẻ:</p> <span th:text="${productDto.product_id}"></span></p>
+                <p><p>Chủ sở hữu xe:</p> <span th:text="${productDto.product_id}"></span></p>
+                <p><p>Loại xe:</p> <span th:text="${productDto.product_id}"></span></p>
+                <p><p>Biển số xe:</p> <span th:text="${productDto.product_id}"></span></p>
+                <p><p>Thời hạn:</p> <span th:text="${productDto.product_id}"></span></p>
+            </div>
+        </div>
+        -->
+        
+    </section>
+</body>
+</html>

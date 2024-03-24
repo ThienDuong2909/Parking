@@ -15,7 +15,7 @@ public class TaiKhoan {
     @Column(name ="TenTaiKhoan", columnDefinition= "nvarchar(30)")
     private String tenTaiKhoan;
 
-    @Column(name ="MatKhau", columnDefinition= "nvarchar(30)")
+    @Column(name ="MatKhau", columnDefinition= "nvarchar(MAX)")
     private String matKhau;
 
     @Column(name ="Email", columnDefinition= "nvarchar(30)")

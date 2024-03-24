@@ -1,8 +1,16 @@
 package com.app.parking.Entities;
-import jakarta.persistence.*;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.util.Collection;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "Khach")
 public class Khach {
@@ -11,13 +19,13 @@ public class Khach {
     @Column(name ="MaKhachHang")
     private int maKhachHang;
     @Column(name ="HoTen", columnDefinition= "nvarchar(30)")
-    private int hoTen;
+    private String hoTen;
     @Column(name ="GioiTinh", columnDefinition= "nvarchar(30)")
-    private int gioiTinh;
+    private String gioiTinh;
     @Column(name ="STD", columnDefinition= "nvarchar(30)")
-    private int STD;
+    private String STD;
     @Column(name ="DiaChi", columnDefinition= "nvarchar(50)")
-    private int diaChi;
+    private String diaChi;
 
     @Column(name ="MaTaiKhoan")
     private int maTaiKhoan;
