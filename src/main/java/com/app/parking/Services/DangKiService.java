@@ -127,4 +127,8 @@ public class DangKiService {
         }
 		return thongTinTheDTOs;
 	}
+	
+	public void delete(int madk) {
+		dangKyRepository.deleteById(madk);
+	}
 }

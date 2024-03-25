@@ -174,7 +174,7 @@ public class NhanVienController {
     }
     
     @GetMapping("ChapNhan/DK={id}")
-    public String acceptOrder(@PathVariable("id") Integer orderId){
+    public String chapnhan(@PathVariable("id") Integer orderId){
         The the = new The();
         the.setMaDK(orderId);
         the.setTrangThai(1);
@@ -183,6 +183,18 @@ public class NhanVienController {
         DangKy dangKy = dangKiService.findById(orderId);
         dangKy.setTrang_Thai(1);
         dangKiService.save_DangKy(dangKy);
+        
+        
+        
+        return "redirect:/admin/Quan_ly_the";
+    }
+    
+    @GetMapping("Tuchoi/DK={id}")
+    public String tuchoi(@PathVariable("id") Integer orderId){
+        
+        
+        dangKiService.delete(orderId);
+        
         
         
         

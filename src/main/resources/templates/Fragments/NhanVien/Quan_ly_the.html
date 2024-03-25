@@ -4,44 +4,44 @@
     <meta charset="UTF-8">
     <title>Quản lý thẻ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-    <script src="https://unpkg.com/currency.js@~2.0.0/dist/currency.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
-<h1>Danh sách đăng ký thẻ xe</h1>
-<div class="container-fluid">
-    <table id="detailOrderTable" class="table table-bordered">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Họ tên</th>
-            <th>Giới tính</th>
-            <th>Địa chỉ</th>
-            <th>SDT</th>
-            <th>Loại xe</th>
-            <th>Biển số</th>
-            <th>Thời hạn</th>
-            <th>Duyệt</th>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="DK : ${ds_the_chua_duyet}">
-            <tr>
-                <td th:text="${DK.MaDK}"></td>
-                <td th:text="${DK.ten}"></td>
-                <td th:text="${DK.GioiTinh}"></td>
-                <td th:text="${DK.DC}"></td>
-                <td th:text="${DK.SDT}"></td>
-                <td th:text="${DK.LoaiXe}"></td>
-                <td th:text="${DK.BienSo}"></td>
-                <td th:text="${DK.ThoiHan}"></td>
-                <td>
-                    <a th:href="@{'/admin/ChapNhan/DK=' + ${DK.MaDK}}">Chấp nhận</a>
-                </td>
-            </tr>
-        </th:block>
-        </tbody>
-    </table>
-</div>
+    <div class="container">
+        <h1 class="mt-5">Danh sách đăng ký thẻ xe</h1>
+        <div class="table-responsive">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Họ tên</th>
+                        <th>Giới tính</th>
+                        <th>Địa chỉ</th>
+                        <th>SDT</th>
+                        <th>Loại xe</th>
+                        <th>Biển số</th>
+                        <th>Thời hạn</th>
+                        <th>Duyệt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="DK : ${ds_the_chua_duyet}">
+                        <td th:text="${DK.MaDK}"></td>
+                        <td th:text="${DK.ten}"></td>
+                        <td th:text="${DK.GioiTinh}"></td>
+                        <td th:text="${DK.DC}"></td>
+                        <td th:text="${DK.SDT}"></td>
+                        <td th:text="${DK.LoaiXe}"></td>
+                        <td th:text="${DK.BienSo}"></td>
+                        <td th:text="${DK.ThoiHan}"></td>
+                        <td>
+                            <a class="btn btn-success" th:href="@{'/admin/ChapNhan/DK=' + ${DK.MaDK}}">Chấp nhận</a>
+                            <a class="btn btn-danger" th:href="@{'/admin/Tuchoi/DK=' + ${DK.MaDK}}">Từ chối</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
