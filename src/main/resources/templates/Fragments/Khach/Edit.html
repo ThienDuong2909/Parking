@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa</title>
+    <style>
+        
+        .container {
+            max-width: 400px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            color: #333;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chỉnh sửa thông tin thẻ xe</h1>
+    <div class="container">
+        <h2>Điền Thông tin xe</h2>
+        <form th:action="@{/user/update}" method="post">
+            <label for="loaixe">Loại xe:</label>                    
+			<select id="loaixe" name="loaixe">
+			    <option value="xemay" th:selected="${the_chua_duyet.LoaiXe} == 'xemay'">Xe Máy</option>
+			    <option value="xeoto" th:selected="${the_chua_duyet.LoaiXe} == 'xeoto'">Xe Ô Tô</option>
+			</select>
+            <label for="Bienso">Biển số:</label>
+            <input type="text" id="Bienso" name="Bienso" th:value="${the_chua_duyet.BienSo}">
+
+            <label for="Thoihan">Thời hạn:</label>
+            <select id="Thoihan" name="Thoihan">
+                <option value="1 Tháng" th:selected="${the_chua_duyet.ThoiHan} == '1 Tháng'">1 Tháng</option>
+                <option value="6 Tháng" th:selected="${the_chua_duyet.ThoiHan} == '6 Tháng'">6 Tháng</option>
+                <option value="1 Năm" th:selected="${the_chua_duyet.ThoiHan} == '1 Năm'">1 Năm</option>
+            </select>
+            <input type="hidden" id="id" name="MaDK" th:value="${the_chua_duyet.MaDK}">
+            <input type="hidden" id="id" name="MaXe" th:value="${the_chua_duyet.MaXe}">
+
+			<button type="submit" class="edit-btn" th:href="@{/user/edit}">Chỉnh sửa</button>
+        </form>
+    </div>
+</body>
+</html>

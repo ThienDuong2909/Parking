@@ -1,15 +1,23 @@
 package com.app.parking.Controllers;
 
 import com.app.parking.DTOS.BienBanDTO;
+import com.app.parking.DTOS.KhachDTO;
+import com.app.parking.DTOS.DangKyChuaDuyetDTO;
 import com.app.parking.Entities.BienBan;
+import com.app.parking.Entities.DangKy;
 import com.app.parking.Entities.Khach;
 import com.app.parking.Entities.NhanVien;
 import com.app.parking.Entities.TaiKhoan;
+import com.app.parking.Entities.The;
+import com.app.parking.Entities.Xe;
 import com.app.parking.Security.CustomUserDetails;
 import com.app.parking.Services.BienBanService;
+import com.app.parking.Services.DangKiService;
 import com.app.parking.Services.KhachService;
 import com.app.parking.Services.NhanVienService;
 import com.app.parking.Services.TaiKhoanService;
+import com.app.parking.Services.TheService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
@@ -34,6 +42,11 @@ public class NhanVienController {
     private NhanVienService nhanVienService;
     @Autowired
     private BienBanService bienBanService;
+    @Autowired
+    private DangKiService dangKiService;
+    @Autowired
+    private TheService theService;
+    
     public TaiKhoan curUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
@@ -148,5 +161,31 @@ public class NhanVienController {
         System.out.println("Mã Biên Bản: "+maBienBan);
         bienBanService.xoaBienBan(maBienBan);
         return "redirect:/admin/minutes?delete_minute_success";
+    }
+    
+    @GetMapping("/Quan_ly_the")
+    public String Quan_ly_the(Model model){
+        TaiKhoan taiKhoan = curUser();              
+        KhachDTO khachDTO = khachService.getKhachById_Tk(taiKhoan.getMaTaiKhoan());                      
+        List<DangKyChuaDuyetDTO> ds_the_chua_duyet = dangKiService.ds_the_chua_duyet();        
+        model.addAttribute("ds_the_chua_duyet", ds_the_chua_duyet);
+        
+        return "Fragments/NhanVien/Quan_ly_the";
+    }
+    
+    @GetMapping("ChapNhan/DK={id}")
+    public String acceptOrder(@PathVariable("id") Integer orderId){
+        The the = new The();
+        the.setMaDK(orderId);
+        the.setTrangThai(1);
+        theService.save_The(the);
+        
+        DangKy dangKy = dangKiService.findById(orderId);
+        dangKy.setTrang_Thai(1);
+        dangKiService.save_DangKy(dangKy);
+        
+        
+        
+        return "redirect:/admin/Quan_ly_the";
     }
 }

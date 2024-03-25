@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thẻ Xe</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f0f0f0;
+            color: #333;
         }
         header {
-            background-color: #fff;
+            background-color: #007bff;
+            color: #fff;
             padding: 10px 0;
             text-align: center;
-            margin-bottom: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         section {
@@ -24,78 +26,90 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             margin-bottom: 20px;
+            padding: 20px;
         }
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: flex-start; /* Đổi giá trị này từ 'space-between' sang 'flex-start' */
         }
         .card {
             width: calc(30% - 20px);
             margin-bottom: 20px;
-            padding: 15px;
-            background-color: #ccc;
+            background-color: #f8f9fa;
             border-radius: 10px;
             box-sizing: border-box;
             text-align: left;
             position: relative;
+            padding: 15px;
+            transition: all 0.3s ease;
+            margin-right: 20px; /* Thêm khoảng cách bên phải giữa các thẻ */
+        }
+        .card:last-child {
+            margin-right: 0; /* Không cần khoảng cách bên phải cho thẻ cuối cùng */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         .card h2 {
             margin-top: 0;
+            color: #007bff;
         }
         .edit-btn {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 5px 10px;
+            padding: 8px 16px;
             background-color: #007bff;
             color: #fff;
             border: none;
             border-radius: 3px;
             cursor: pointer;
-            margin-top: 20px; /* Thêm dòng này để tạo khoảng cách */
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.3s ease;
+        }
+        .edit-btn:hover {
+            background-color: #0056b3;
         }
         .card-content {
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    
+    <header>
         <h1>Thẻ Xe</h1>
-        <button  onclick="location.href='/user/DK_the_xe'">Đăng ký thẻ xe</button>
-    
-    
-    
-    <section class="container">     
-        <div class="card" th:each="the_chua_duyet : ${ds_the_chua_duyet}">
+    </header>
+    <h2> <button  onclick="location.href='/user/DK_the_xe'">Đăng ký thẻ xe</button></h2>
+    <section class="container">
+        <div class="card" th:each="the_da_duyet : ${ds_the_da_duyet}">
             <div class="card-content">
                 <h2>Thông tin thẻ xe</h2>
+                <p>Chủ sở hữu xe: <span th:text="${the_da_duyet.ten}"></span></p>
+                <p>Loại xe: <span th:text="${the_da_duyet.LoaiXe}"></span></p>
+                <p>Biển số xe: <span th:text="${the_da_duyet.BienSo}"></span></p>
+                <p>Thời hạn: <span th:text="${the_da_duyet.ThoiHan}"></span></p>
+            </div>
+        </div>
+    </section>
+    <h2>Thẻ đang chờ duyệt</h2>
+    <section class="container">
+        <div class="card" th:each="the_chua_duyet : ${ds_the_chua_duyet}">
+            <div class="card-content">
+                <h2>Thông tin thẻ xe Chưa duyệt</h2>
                 <p>Chủ sở hữu xe: <span th:text="${the_chua_duyet.ten}"></span></p>
                 <p>Loại xe: <span th:text="${the_chua_duyet.LoaiXe}"></span></p>
                 <p>Biển số xe: <span th:text="${the_chua_duyet.BienSo}"></span></p>
                 <p>Thời hạn: <span th:text="${the_chua_duyet.ThoiHan}"></span></p>
                 <p><strong>Trạng thái: Đang chờ xét duyệt của nhân viên</strong></p>
             </div>
-            <button class="edit-btn" onclick="location.href='edit.html'">Chỉnh sửa</button>
+            
+				<button class="edit-btn" th:onclick="|location.href='/user/edit?id=${the_chua_duyet.MaDK}'|">Chỉnh sửa</button>
+
         </div>
-        <!--
-        <div class="card" th:each="product : ${products}">
-            <div class="card-content">
-                <h2>Thông tin thẻ xe</h2>
-                <p><p>Mã thẻ:</p> <span th:text="${productDto.product_id}"></span></p>
-                <p><p>Chủ sở hữu xe:</p> <span th:text="${productDto.product_id}"></span></p>
-                <p><p>Loại xe:</p> <span th:text="${productDto.product_id}"></span></p>
-                <p><p>Biển số xe:</p> <span th:text="${productDto.product_id}"></span></p>
-                <p><p>Thời hạn:</p> <span th:text="${productDto.product_id}"></span></p>
-            </div>
-        </div>
-        -->
-        
     </section>
 </body>
 </html>

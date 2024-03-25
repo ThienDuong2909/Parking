@@ -10,5 +10,8 @@ import java.util.List;
 @Repository
 public interface DangKyRepository extends JpaRepository<DangKy, Integer> {
     @Query(value = "SELECT * FROM DANG_KI WHERE MA_KHACH_HANG = ?1 AND TRANG_THAI = ?2", nativeQuery = true)
-    List<DangKy> ds_the_chua_duyet(int maKhachHang, int trangThai);
+    List<DangKy> ds_the_chua_duyet_cua_1_Khach(int maKhachHang, int trangThai);
+    
+    @Query(value = "SELECT * FROM DANG_KI WHERE  TRANG_THAI = ?1", nativeQuery = true)
+    List<DangKy> ds_the_chua_duyet(int trangThai);
 }

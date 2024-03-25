@@ -3,13 +3,14 @@ package com.app.parking.Controllers;
 
 import com.app.parking.DTOS.BienBanDTO;
 import com.app.parking.DTOS.KhachDTO;
-import com.app.parking.DTOS.ThongTinTheDTO;
+import com.app.parking.DTOS.DangKyChuaDuyetDTO;
 import com.app.parking.Entities.BienBan;
 import com.app.parking.Entities.DangKy;
 import com.app.parking.Entities.Khach;
 import com.app.parking.Entities.NhanVien;
 import com.app.parking.Entities.TaiKhoan;
 import com.app.parking.Entities.Xe;
+import com.app.parking.Repositories.XeRepository;
 import com.app.parking.Security.CustomUserDetails;
 import com.app.parking.Services.BienBanService;
 import com.app.parking.Services.DangKiService;
@@ -147,7 +148,13 @@ public class KhachController {
     @GetMapping("/The_Xe")
     public String the_xe(Model model){
         TaiKhoan taiKhoan = curUser();
+        KhachDTO khachDTO = khachService.getKhachById_Tk(taiKhoan.getMaTaiKhoan());
+        List<DangKyChuaDuyetDTO> ds_the_chua_duyet = dangKiService.ds_the_chua_duyet_cua_1_Khach(khachDTO.getMaKhachHang(),0);
+        List<DangKyChuaDuyetDTO> ds_the_da_duyet = dangKiService.ds_the_chua_duyet_cua_1_Khach(khachDTO.getMaKhachHang(),1);
         
+        model.addAttribute("ds_the_chua_duyet", ds_the_chua_duyet);
+        model.addAttribute("ds_the_da_duyet", ds_the_da_duyet);
+
 
         return "Fragments/Khach/The_Xe";
     }
@@ -195,12 +202,57 @@ public class KhachController {
         dangKy.setTrang_Thai(0);
         
         dangKiService.save_DangKy(dangKy);
+     
+        return "redirect:/user/The_Xe";
+    }
+    
+    @GetMapping("/edit")
+    public String edit(Model model, @RequestParam("id") int id){
         
-        List<ThongTinTheDTO> ds_the_chua_duyet = dangKiService.ds_the_chua_duyet(khachDTO.getMaKhachHang(), 0, khachDTO.getHoTen());
-        
-        model.addAttribute("ds_the_chua_duyet", ds_the_chua_duyet);
+        DangKyChuaDuyetDTO chuaDuyetDTO = dangKiService.findKhachByID(id);
+        model.addAttribute("the_chua_duyet", chuaDuyetDTO);
 
-        return "/Fragments/khach/The_Xe";
+        return "Fragments/Khach/Edit";
+    }
+    
+    @PostMapping("/update")
+    public String update(
+    		@RequestParam("MaDK") int MaDK,
+    		@RequestParam("MaXe") int MaXe,
+    		@RequestParam("loaixe") String loaixe,
+            @RequestParam("Bienso") String Bienso,
+            @RequestParam("Thoihan") String Thoihan,
+            
+            Model model
+    ){  
+    	System.out.println("--------------------------------------------------------------");
+    	System.out.println(MaDK);
+    	System.out.println(MaXe);
+    	System.out.println("--------------------------------------------------------------");
+        int MaLoai = 0;
+        if(loaixe.equals("xemay")) {
+            MaLoai = 1;
+        }
+        if(loaixe.equals("xeoto")) {
+            MaLoai = 2;
+        }
+
+        
+        TaiKhoan taiKhoan = curUser();        
+        KhachDTO khachDTO = khachService.getKhachById_Tk(taiKhoan.getMaTaiKhoan());
+        
+        Xe xe =  xeService.findByID(MaXe);     
+        xe.setMaLoai(MaLoai);
+        xe.setSo_xe(Bienso);
+          
+        xe = xeService.save_Xe(xe);
+        
+        
+        DangKy dangKy = dangKiService.findById(MaDK);     
+        dangKy.setThoi_Han(Thoihan);       
+        dangKiService.save_DangKy(dangKy);
+     
+        return "redirect:/user/The_Xe";
     }
 }
 
