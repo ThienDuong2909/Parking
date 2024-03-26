@@ -69,7 +69,7 @@ public class NhanVienController {
         TaiKhoan taiKhoan = curUser();
         model.addAttribute("name", taiKhoan.getEmail()+taiKhoan.getTenTaiKhoan());
 
-        return "Fragments/NhanVien/header";
+        return "Layouts/nhanvien";
     }
 
     @GetMapping("/minutes")

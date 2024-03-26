@@ -42,250 +42,249 @@
 
 </head>
 <body>
-
-<div class="container">
-    <form id="sortForm" th:action="@{/user/minutes}" method="get">
+    <div class="container">
+        <form id="sortForm" th:action="@{/user/minutes}" method="get">
+            <div class="select-box">
+                <label for="select-box1" class="label select-box1"><span class="label-desc" th:text="${mapOption.values()[0]}"></span> </label>
+                <select id="select-box1" name ="sort" class="select" onchange="updateFormActionAndSubmit()">
+                    <option></option>
+                    <option th:each="entry, iterStat : ${mapOption}"
+                            th:if="${!iterStat.first}"
+                            th:value="${entry.key}"
+                            th:text="${entry.value}"></option>
+                </select>
+            </div>
+        </form>
+    <form id="statusForm" th:action="@{/user/minutes}" method="get">
         <div class="select-box">
-            <label for="select-box1" class="label select-box1"><span class="label-desc" th:text="${mapOption.values()[0]}"></span> </label>
-            <select id="select-box1" name ="sort" class="select" onchange="updateFormActionAndSubmit()">
+            <label for="select-box2" class="label select-box1"><span class="label-desc" th:text="${mapStatusOption.values()[0]}"></span> </label>
+            <select id="select-box2" name ="status" class="select" onchange="updateFormActionAndSubmitStatusForm()">
                 <option></option>
-                <option th:each="entry, iterStat : ${mapOption}"
+                <option th:each="entry, iterStat : ${mapStatusOption}"
                         th:if="${!iterStat.first}"
                         th:value="${entry.key}"
                         th:text="${entry.value}"></option>
             </select>
         </div>
     </form>
-<form id="statusForm" th:action="@{/user/minutes}" method="get">
-    <div class="select-box">
-        <label for="select-box2" class="label select-box1"><span class="label-desc" th:text="${mapStatusOption.values()[0]}"></span> </label>
-        <select id="select-box2" name ="status" class="select" onchange="updateFormActionAndSubmitStatusForm()">
-            <option></option>
-            <option th:each="entry, iterStat : ${mapStatusOption}"
-                    th:if="${!iterStat.first}"
-                    th:value="${entry.key}"
-                    th:text="${entry.value}"></option>
-        </select>
+    <div th:if="${param.creat_minute_success}">Đã nộp phạt thành công</div>
+
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="table-responsive" data-pattern="priority-columns">
+                    <table summary="This table shows how to create responsive tables using RWD-Table-Patterns' functionality" class="table table-bordered table-hover" id="myTable">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên biên bản</th>
+                            <th>Tên người lập biên bản</th>
+                            <th>Nội Dung</th>
+                            <th>Thời gian</th>
+                            <th>Tiền phạt</th>
+                            <th>Thao tác</th>
+
+                        </tr>
+                        </thead>
+                        <tbody th:if="${dsBienBanDto != null and not #lists.isEmpty(dsBienBanDto)}">
+                        <tr th:each="bienBanDto : ${dsBienBanDto}">
+                            <td th:text="${bienBanDto.getTenBienBan()}"></td>
+                            <td th:text="${bienBanDto.getTenNhanVien()}"></td>
+                            <td th:text="${bienBanDto.getNoiDung()}"></td>
+                            <td th:text="${bienBanDto.getThoiGianLap()}"></td>
+                            <td th:text="${bienBanDto.getTienPhat()}"></td>
+                            <td>
+                                <button
+                                        class="btn btn-success"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#viewDetail"
+                                        th:data-maBienBan="${bienBanDto.getMaBienBan()}"
+                                        th:data-tenBienBan="${bienBanDto.getTenBienBan()}"
+                                        th:data-TenNhanVien="${bienBanDto.getTenNhanVien()}"
+                                        th:data-noiDung="${bienBanDto.getNoiDung()}"
+                                        th:data-tienPhat="${bienBanDto.getTienPhat()}"
+                                        th:data-thoiGianLap="${bienBanDto.getThoiGianLap()}"
+
+                                        th:data-trangThai="${bienBanDto.getTrangThai()}"
+                                >Xem chi tiết</button>
+                                <button id="delBtn" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#payModal"
+                                        th:data-maBienBan="${bienBanDto.getMaBienBan()}"
+                                        th:data-tenBienBan="${bienBanDto.getTenBienBan()}"
+                                        th:disabled="${bienBanDto.getTrangThai() == 'Đã nộp'}"
+                                        th:text="${bienBanDto.getTrangThai() == 'Đã nộp' ?'Đã nộp':'Nộp phạt'}"
+                                >Nộp phạt</button>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div th:if="${dsBienBanDto == null or #lists.isEmpty(dsBienBanDto)}">
+                        <div> Không có dự liệu phù hợp</div>
+                    </div>
+                </div><!--end of .table-responsive-->
+            </div>
+        </div>
     </div>
-</form>
-<div th:if="${param.creat_minute_success}">Đã nộp phạt thành công</div>
-
-
-
-
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="table-responsive" data-pattern="priority-columns">
-                <table summary="This table shows how to create responsive tables using RWD-Table-Patterns' functionality" class="table table-bordered table-hover" id="myTable">
-                    <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Tên biên bản</th>
-                        <th>Tên người lập biên bản</th>
-                        <th>Nội Dung</th>
-                        <th>Thời gian</th>
-                        <th>Tiền phạt</th>
-                        <th>Thao tác</th>
-
-                    </tr>
-                    </thead>
-                    <tbody th:if="${dsBienBanDto != null and not #lists.isEmpty(dsBienBanDto)}">
-                    <tr th:each="bienBanDto : ${dsBienBanDto}">
-                        <td th:text="${bienBanDto.getTenBienBan()}"></td>
-                        <td th:text="${bienBanDto.getTenNhanVien()}"></td>
-                        <td th:text="${bienBanDto.getNoiDung()}"></td>
-                        <td th:text="${bienBanDto.getThoiGianLap()}"></td>
-                        <td th:text="${bienBanDto.getTienPhat()}"></td>
-                        <td>
-                            <button
-                                    class="btn btn-success"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#viewDetail"
-                                    th:data-maBienBan="${bienBanDto.getMaBienBan()}"
-                                    th:data-tenBienBan="${bienBanDto.getTenBienBan()}"
-                                    th:data-TenNhanVien="${bienBanDto.getTenNhanVien()}"
-                                    th:data-noiDung="${bienBanDto.getNoiDung()}"
-                                    th:data-tienPhat="${bienBanDto.getTienPhat()}"
-                                    th:data-thoiGianLap="${bienBanDto.getThoiGianLap()}"
-
-                                    th:data-trangThai="${bienBanDto.getTrangThai()}"
-                            >Xem chi tiết</button>
-                            <button id="delBtn" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#payModal"
-                                    th:data-maBienBan="${bienBanDto.getMaBienBan()}"
-                                    th:data-tenBienBan="${bienBanDto.getTenBienBan()}"
-                                    th:disabled="${bienBanDto.getTrangThai() == 'Đã nộp'}"
-                                    th:text="${bienBanDto.getTrangThai() == 'Đã nộp' ?'Đã nộp':'Nộp phạt'}"
-                            >Nộp phạt</button>
-                        </td>
-
-                    </tr>
-                    </tbody>
-                </table>
-                <div th:if="${dsBienBanDto == null or #lists.isEmpty(dsBienBanDto)}">
-                    <div> Không có dự liệu phù hợp</div>
+    <!--view detail modal-->
+    <div class="modal fade" id="viewDetail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="viewDetailLabel">Biên bản</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div><!--end of .table-responsive-->
+                <div class="modal-body">
+                    <form method="POST" th:action="@{/user/edit-minute}" id="viewDetailForm">
+
+                        <div>
+                            <label>Tên biên bản:</label>
+                            <input type="text" placeholder="Tên Biên bảns" class="form-control" name="tenBienBan" disabled>
+                        </div>
+                        <div>
+                            <input type="hidden" class="form-control" name="maBienBan">
+                        </div>
+                        <div>
+                            <label>Người lập biên bản:</label>
+                            <input type="text" placeholder="Nhân viên" class="form-control" name="subtenNhanVien" disabled>
+                        </div>
+
+                        <div>
+                            <label>Nội dung:</label>
+                            <textarea name ="noiDung" class="form-control" placeholder="Nội dung Biên bản" disabled></textarea>
+                        </div>
+                        <div>
+                            <label>Thời gian:</label>
+                            <input type="text" placeholder="Thời gian" class="form-control" name="thoiGianLap" disabled>
+                        </div>
+                        <div>
+                            <label>Tiền phạt:</label>
+                            <input type="text" placeholder="Tiền phạt" class="form-control" name="tienPhat" disabled>
+                        </div>
+                        <div>
+                            <label>Trạng thái:</label>
+                            <input type="text" placeholder="Trạng thái" class="form-control" name="trangThai" disabled>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
-<!--view detail modal-->
-<div class="modal fade" id="viewDetail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="viewDetailLabel">Biên bản</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!--Delete Modal-->
+    <div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
+                </div>
+                <div class="modal-body">
+                   <form id="payForm" method="POST" th:action="@{/user/pay-minute}">
+                       <p name="p-confirm"></p>
+                       <input type="hidden" name="maBienBan">
+                       <div class="modal-footer">
+                           <button type="submit" id="confirm-payBtn" class="btn btn-primary">Đồng ý</button>
+                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                       </div>
+                   </form>
+                </div>
+
             </div>
-            <div class="modal-body">
-                <form method="POST" th:action="@{/user/edit-minute}" id="viewDetailForm">
-
-                    <div>
-                        <label>Tên biên bản:</label>
-                        <input type="text" placeholder="Tên Biên bảns" class="form-control" name="tenBienBan" disabled>
-                    </div>
-                    <div>
-                        <input type="hidden" class="form-control" name="maBienBan">
-                    </div>
-                    <div>
-                        <label>Người lập biên bản:</label>
-                        <input type="text" placeholder="Nhân viên" class="form-control" name="subtenNhanVien" disabled>
-                    </div>
-
-                    <div>
-                        <label>Nội dung:</label>
-                        <textarea name ="noiDung" class="form-control" placeholder="Nội dung Biên bản" disabled></textarea>
-                    </div>
-                    <div>
-                        <label>Thời gian:</label>
-                        <input type="text" placeholder="Thời gian" class="form-control" name="thoiGianLap" disabled>
-                    </div>
-                    <div>
-                        <label>Tiền phạt:</label>
-                        <input type="text" placeholder="Tiền phạt" class="form-control" name="tienPhat" disabled>
-                    </div>
-                    <div>
-                        <label>Trạng thái:</label>
-                        <input type="text" placeholder="Trạng thái" class="form-control" name="trangThai" disabled>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    </div>
-                </form>
-            </div>
-
         </div>
     </div>
-</div>
-<!--Delete Modal-->
-<div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
-            </div>
-            <div class="modal-body">
-               <form id="payForm" method="POST" th:action="@{/user/pay-minute}">
-                   <p name="p-confirm"></p>
-                   <input type="hidden" name="maBienBan">
-                   <div class="modal-footer">
-                       <button type="submit" id="confirm-payBtn" class="btn btn-primary">Đồng ý</button>
-                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                   </div>
-               </form>
-            </div>
-
-        </div>
     </div>
-</div>
-</div>
-<script>
-    // Lấy tất cả các hàng (tr) trong bảng
-    var rows = document.getElementById("myTable").getElementsByTagName("tr");
+    <script>
+        // Lấy tất cả các hàng (tr) trong bảng
+        var rows = document.getElementById("myTable").getElementsByTagName("tr");
 
-    // Bỏ qua hàng đầu tiên (tiêu đề)
-    for (var i = 1; i < rows.length; i++) {
-        // Tạo một ô (td) mới để chứa số thứ tự
-        var cell = rows[i].insertCell(0);
-        // Gán số thứ tự cho ô mới
-        cell.textContent = i;
-    }
-    const viewDetailModal = document.getElementById('viewDetail')
-    if (viewDetailModal) {
-        viewDetailModal.addEventListener('show.bs.modal', event => {
-            const button = event.relatedTarget;
-            const bienBan = {
-                maBienBan: button.getAttribute('data-maBienBan'),
-                tenKhach: button.getAttribute('data-tenKhach'),
-                tenNhanVien: button.getAttribute('data-tenNhanVien'),
-                noiDung: button.getAttribute('data-noiDung'),
-                tienPhat: button.getAttribute('data-tienPhat'),
-                thoiGianLap: button.getAttribute('data-thoiGianLap'),
-                trangThai: button.getAttribute('data-trangThai'),
-                tenBienBan: button.getAttribute('data-tenBienBan')
-            };
-            console.log(bienBan)
-            $('#viewDetailForm input[name="maBienBan"]').val(bienBan.maBienBan);
-            $('#viewDetailForm input[name="tenBienBan"]').val(bienBan.tenBienBan);
-            $('#viewDetailForm input[name="tenKhach"]').val(bienBan.tenKhach);
-            $('#viewDetailForm input[name="subtenNhanVien"]').val(bienBan.tenNhanVien);
-            $('#viewDetailForm input[name="tienPhat"]').val(bienBan.tienPhat);
-            $('#viewDetailForm textarea[name="noiDung"]').val(bienBan.noiDung);
-            $('#viewDetailForm input[name="trangThai"]').val(bienBan.trangThai);
-            $('#viewDetailForm input[name="thoiGianLap"]').val(bienBan.thoiGianLap);
-
-            $('#editForm input[name="subtenNhanVien"]').val(bienBan.tenNhanVien);
-            $('#editForm input[name="subtenKhach"]').val(bienBan.tenKhach);
-
-        })
-    }
-
-    const payModal = document.getElementById('payModal')
-    if (payModal) {
-        payModal.addEventListener('show.bs.modal', event => {
-            console.log("del clicked")
-            const button = event.relatedTarget;
-            $('#payForm p[name="p-confirm"]').text('Bạn có đồng ý nộp phạt biên bản "'+button.getAttribute("data-tenBienBan")+'" không?');
-            $('#payForm input[name="maBienBan"]').val(button.getAttribute("data-maBienBan"));
-
-        })}
-
-    $("select").on("click" , function() {
-
-        $(this).parent(".select-box").toggleClass("open");
-
-    });
-
-    $(document).mouseup(function (e)
-    {
-        var container = $(".select-box");
-
-        if (container.has(e.target).length === 0)
-        {
-            container.removeClass("open");
+        // Bỏ qua hàng đầu tiên (tiêu đề)
+        for (var i = 1; i < rows.length; i++) {
+            // Tạo một ô (td) mới để chứa số thứ tự
+            var cell = rows[i].insertCell(0);
+            // Gán số thứ tự cho ô mới
+            cell.textContent = i;
         }
-    });
+        const viewDetailModal = document.getElementById('viewDetail')
+        if (viewDetailModal) {
+            viewDetailModal.addEventListener('show.bs.modal', event => {
+                const button = event.relatedTarget;
+                const bienBan = {
+                    maBienBan: button.getAttribute('data-maBienBan'),
+                    tenKhach: button.getAttribute('data-tenKhach'),
+                    tenNhanVien: button.getAttribute('data-tenNhanVien'),
+                    noiDung: button.getAttribute('data-noiDung'),
+                    tienPhat: button.getAttribute('data-tienPhat'),
+                    thoiGianLap: button.getAttribute('data-thoiGianLap'),
+                    trangThai: button.getAttribute('data-trangThai'),
+                    tenBienBan: button.getAttribute('data-tenBienBan')
+                };
+                console.log(bienBan)
+                $('#viewDetailForm input[name="maBienBan"]').val(bienBan.maBienBan);
+                $('#viewDetailForm input[name="tenBienBan"]').val(bienBan.tenBienBan);
+                $('#viewDetailForm input[name="tenKhach"]').val(bienBan.tenKhach);
+                $('#viewDetailForm input[name="subtenNhanVien"]').val(bienBan.tenNhanVien);
+                $('#viewDetailForm input[name="tienPhat"]').val(bienBan.tienPhat);
+                $('#viewDetailForm textarea[name="noiDung"]').val(bienBan.noiDung);
+                $('#viewDetailForm input[name="trangThai"]').val(bienBan.trangThai);
+                $('#viewDetailForm input[name="thoiGianLap"]').val(bienBan.thoiGianLap);
+
+                $('#editForm input[name="subtenNhanVien"]').val(bienBan.tenNhanVien);
+                $('#editForm input[name="subtenKhach"]').val(bienBan.tenKhach);
+
+            })
+        }
+
+        const payModal = document.getElementById('payModal')
+        if (payModal) {
+            payModal.addEventListener('show.bs.modal', event => {
+                console.log("del clicked")
+                const button = event.relatedTarget;
+                $('#payForm p[name="p-confirm"]').text('Bạn có đồng ý nộp phạt biên bản "'+button.getAttribute("data-tenBienBan")+'" không?');
+                $('#payForm input[name="maBienBan"]').val(button.getAttribute("data-maBienBan"));
+
+            })}
+
+        $("select").on("click" , function() {
+
+            $(this).parent(".select-box").toggleClass("open");
+
+        });
+
+        $(document).mouseup(function (e)
+        {
+            var container = $(".select-box");
+
+            if (container.has(e.target).length === 0)
+            {
+                container.removeClass("open");
+            }
+        });
 
 
-    function updateFormActionAndSubmit() {
-        var selectedValue = document.getElementById('select-box1').value;
-        console.log(selectedValue)
-        var form = document.getElementById('sortForm');
+        function updateFormActionAndSubmit() {
+            var selectedValue = document.getElementById('select-box1').value;
+            console.log(selectedValue)
+            var form = document.getElementById('sortForm');
 
-        form.submit();
-    }
+            form.submit();
+        }
 
-    function updateFormActionAndSubmitStatusForm() {
-        var selectedValue = document.getElementById('select-box2').value;
-        console.log(selectedValue)
-        var form = document.getElementById('statusForm');
+        function updateFormActionAndSubmitStatusForm() {
+            var selectedValue = document.getElementById('select-box2').value;
+            console.log(selectedValue)
+            var form = document.getElementById('statusForm');
 
-        form.submit();
-    }
+            form.submit();
+        }
 
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 </body>
 </html>

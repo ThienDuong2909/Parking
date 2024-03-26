@@ -1,0 +1,44 @@
+.nav-bar{
+    list-style-type: none; /* Loại bỏ dấu chấm đầu dòng của danh sách */
+    padding: 0;
+}
+
+.nav-bar .nav-item{
+    color: #fff;
+    padding-left: 4px;
+}
+.nav-bar .nav-item{
+    display: flex;
+    align-items: center;
+    padding: 16px;
+}
+.nav-bar .nav-item i {
+    padding: 4px;
+    padding-right: 4px;
+
+}
+
+.nav-bar .logout{
+    margin-top: 100px;
+}
+
+.nav-bar .home{
+    margin-bottom: 15px;
+}
+.nav-bar .info{
+    margin-top: 15px;
+
+}
+
+.nav-bar .nav-item:hover{
+    background-color: #f3f3f3;
+    color: #08172b;
+    text-decoration: none;
+}
+.nav-bar hr{
+    border: 0;
+    width: 80%;
+    margin: 0 auto;
+    height: 1px;
+    background-color: #f3f3f3;
+}

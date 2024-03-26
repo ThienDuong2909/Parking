@@ -1,0 +1,9 @@
+.header{
+    height: 60px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1)
+}
+.header .logo img {
+    width: auto; /* Điều chỉnh chiều rộng của ảnh */
+    height: 60px;
+    object-fit: cover; /* Đảm bảo hình ảnh không bị méo hoặc căng ra */
+}

@@ -1,0 +1,18 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.main{
+    display: flex;
+    flex: 1
+}
+.main .sidebar{
+    width: 300px;
+    background-color: #08172b;
+    padding: 4px;
+}
+.main .content{
+    flex: 1;
+}

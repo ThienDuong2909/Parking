@@ -55,12 +55,12 @@ public class SecurityConfig  {
                 .csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(authz -> authz
-                                .requestMatchers("/", "/**")
-//                .requestMatchers("/login", "/register", "/register/admin", "/forgot-password", "/reset-password*", "/oauth2/**")
+//                                .requestMatchers("/", "/**")
+                .requestMatchers("/login", "/register", "/register/admin", "/forgot-password", "/reset-password*", "/oauth2/**", "/verify")
                 .permitAll()
-//                .requestMatchers("/admin","/admin/**").hasRole("NHANVIEN")
-//                .requestMatchers("/user","/user/", "/user/**").hasRole("KHACH")
-//                .anyRequest().authenticated()
+                .requestMatchers("/admin","/admin/**").hasRole("NHANVIEN")
+                .requestMatchers("/user","/user/", "/user/**").hasRole("KHACH")
+                .anyRequest().authenticated()
                 )
 
                 .formLogin(form -> form

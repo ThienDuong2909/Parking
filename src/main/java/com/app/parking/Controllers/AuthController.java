@@ -120,7 +120,7 @@ public class AuthController {
             String rspwLink = getSiteURL(req) + "/reset-password?token="+token;
             System.out.println(rspwLink);
             sendMail(gmail, rspwLink);
-            model.addAttribute("message", "Chúng tôi đã gửi đường dẫn làm mới mật khẩu, vui lòng kiểm trả E-mail của bạn.");
+            model.addAttribute("message", "Vui lòng kiểm tra E-mail của bạn.");
         }catch (UserNotFoundException   ex){
             System.out.println("Gmail: "+gmail+" Not found");
             model.addAttribute("error", ex.getMessage());
@@ -137,7 +137,7 @@ public class AuthController {
     private void sendMail(String gmail, String rspwLink) throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
-        helper.setFrom("Parking System");
+        helper.setFrom("khinthij@gmail.com","Parking System");
         helper.setTo(gmail);
         String subject = "Làm mới mật khẩu";
         String content = "<p>Xin chào, </p>"
@@ -176,7 +176,7 @@ public class AuthController {
             taiKhoanService.capNhatMatKhau(taiKhoan, matKhauMoi);
             model.addAttribute("message", "You have successfully changed your password");
         }
-        return "/Fragments/auth/message";
+        return "redirect:/login?resetpwsuc";
     }
 }
 

@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/base.css">
+    <link rel="stylesheet" type="text/css" href="/css/nhanvien/header.css">
 </head>
 <body>
-        <h1>Header Admin</h1>
-        <h1 th:text="${'Name is'+name}"></h1>
-        <form th:action="@{/logout}" method="POST">
-            <button type="submit">Logout</button>
-        </form>
+<div class="header" th:fragment="header">
+    <div class="logo">
+        <img src="/img/Logo13.jpg" alt="Logo"/>
+    </div>
+</div>
 </body>
 </html>
